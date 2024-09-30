@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 app=Flask(__name__)
 
@@ -10,12 +10,13 @@ posts = [
         'date_posted': '30 Sep 2024'
     },
     {
-        'author':'Anagram Mohamed',
+        'author':'Anagram Steven',
         'title': 'Post2',
         'content': 'Second Post content',
         'date_posted': '29 Sep 2024'
     }
 ]
+
 
 @app.route("/")
 @app.route("/home")
