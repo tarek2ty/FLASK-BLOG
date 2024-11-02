@@ -1,6 +1,8 @@
 #this will start the app and bring together the different components
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 
 app=Flask(__name__)
 app.config['SECRET_KEY'] = 'b48b31ba403d153e7a91cf92f7a7caeb'
@@ -13,7 +15,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 #and one for the relative path
 db = SQLAlchemy(app) #this is the db instance
                      #each db structure is a class
-
+bcrypt = Bcrypt(app) #initialize the bcrypt class
+                     #Change The Registration Logic in routes.py
+login_manager = LoginManager(app)   #manage the logging mechanism
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'info'
 app.app_context().push()
 
 from flaskblog import routes

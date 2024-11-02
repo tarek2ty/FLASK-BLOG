@@ -1,8 +1,13 @@
-from flaskblog import db
+from flaskblog import db, login_manager 
 from datetime import datetime
+from flask_login import UserMixin #provide the default authentications when logging
 
+#we need a decorator function that can find the user by id
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
-class User(db.Model): #the table of the users
+class User(db.Model, UserMixin): #the table of the users
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -24,3 +29,6 @@ class Post(db.Model): #the table for posts
     def __repr__(self) -> str:
         return f'Post({self.title}, {self.date_posted})'
 
+def __initdb__():
+    db.create_all()
+__initdb__()
